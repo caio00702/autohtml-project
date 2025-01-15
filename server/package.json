@@ -1,0 +1,14 @@
+{
+    "name": "aluraflix-api",
+    "version": "1.0.0",
+    "description": "API REST para o AluraFlix",
+    "main": "server.js",
+    "type": "module",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "json-server": "^1.0.0-alpha.23",
+        "cors": "^2.8.5"
+    }
+}

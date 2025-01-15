@@ -1,0 +1,36 @@
+{
+  "videos": [
+    {
+      "id": "1",
+      "title": "Árvores Binárias",
+      "description": "Aprenda sobre estruturas de dados e árvores binárias nesta aula completa.",
+      "url": "https://www.youtube.com/embed/6uLLfRNgRA4",
+      "thumbnail": "https://img.youtube.com/vi/6uLLfRNgRA4/maxresdefault.jpg",
+      "category": "frontend"
+    },
+    {
+      "id": "2",
+      "title": "O que estuda para ser Backend Developer?",
+      "description": "Descubra o caminho para se tornar um desenvolvedor backend e as principais tecnologias utilizadas.",
+      "url": "https://www.youtube.com/embed/N4OUoJHp4Kw",
+      "thumbnail": "https://img.youtube.com/vi/N4OUoJHp4Kw/maxresdefault.jpg",
+      "category": "backend"
+    },
+    {
+      "id": "3",
+      "title": "Desenvolvimento Android",
+      "description": "Introdução ao desenvolvimento de aplicativos para Android com as melhores práticas.",
+      "url": "https://www.youtube.com/embed/tZFc6-ZsDjc",
+      "thumbnail": "https://img.youtube.com/vi/tZFc6-ZsDjc/maxresdefault.jpg",
+      "category": "mobile"
+    },
+    {
+      "id": "97d7",
+      "title": "Guia de carreira Front-end",
+      "url": "https://www.youtube.com/embed/fpth65ts3cw",
+      "thumbnail": "https://img.youtube.com/vi/fpth65ts3cw/maxresdefault.jpg",
+      "category": "frontend",
+      "description": "Nova temporada de Hipsters.tube no ar e agora com foco em carreira! 🎊\n\nNesse primeiro episódio, confira o que é front-end e como seguir nessa área da tecnologia, através do Tech Guide front-end, um Guia de Estudos do iniciante ao avançado. São 3 níveis de Profundidade e 1 nível de Expansão, formando seu perfil como Dev Front-End em T."
+    }
+  ]
+}
