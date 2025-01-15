@@ -120,13 +120,29 @@ const Button = styled.button`
 `;
 
 const getYouTubeVideoId = (url) => {
-  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  if (!url) return null;
+  
+  // Tenta encontrar o ID em URLs de embed
+  if (url.includes('embed/')) {
+    const match = url.match(/embed\/([^/?]+)/);
+    if (match) return match[1];
+  }
+  
+  // Tenta encontrar o ID em URLs normais do YouTube
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
   const match = url.match(regExp);
-  return (match && match[7].length === 11) ? match[7] : null;
+  return (match && match[2].length === 11) ? match[2] : null;
 };
 
-const getEmbedUrl = (videoId) => `https://www.youtube.com/embed/${videoId}`;
-const getThumbnailUrl = (videoId) => `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+const getEmbedUrl = (videoId) => {
+  if (!videoId) return '';
+  return `https://www.youtube.com/embed/${videoId}`;
+};
+
+const getThumbnailUrl = (videoId) => {
+  if (!videoId) return '';
+  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+};
 
 export const VideoModal = ({ isOpen, onClose, onSave, initialData }) => {
   const [formData, setFormData] = useState({
@@ -147,11 +163,7 @@ export const VideoModal = ({ isOpen, onClose, onSave, initialData }) => {
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-
+    
     if (name === 'url') {
       const videoId = getYouTubeVideoId(value);
       if (videoId) {
@@ -162,8 +174,14 @@ export const VideoModal = ({ isOpen, onClose, onSave, initialData }) => {
           url: embedUrl,
           thumbnail: thumbnailUrl
         }));
+        return;
       }
     }
+    
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = async (e) => {

@@ -114,27 +114,63 @@ const Button = styled.button`
 
 const getFallbackImage = (category) => {
   const images = {
-    frontend: '/public/images/frontend/frontend1.png',
-    backend: '/public/images/backend/backend1.png',
-    mobile: '/public/images/mobile/mobile1.png'
+    frontend: '/images/frontend/frontend1.png',
+    backend: '/images/backend/backend1.png',
+    mobile: '/images/mobile/mobile1.png',
+    outros: '/images/frontend/frontend1.png'
   };
-  return images[category.toLowerCase()] || images.frontend;
+  return images[category?.toLowerCase()] || images.outros;
+};
+
+const getYouTubeVideoId = (url) => {
+  if (!url) return null;
+  
+  // Tenta encontrar o ID em URLs de embed
+  if (url.includes('embed/')) {
+    const match = url.match(/embed\/([^/?]+)/);
+    if (match) return match[1];
+  }
+  
+  // Tenta encontrar o ID em URLs normais do YouTube
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+};
+
+const getThumbnailUrl = (url) => {
+  const videoId = getYouTubeVideoId(url);
+  if (!videoId) return null;
+  
+  // Tenta primeiro a versão hq
+  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 };
 
 export const MovieCard = ({ movie, categoryColor, onEdit, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [currentThumbnail, setCurrentThumbnail] = useState(movie.thumbnail);
 
   const handleImageError = () => {
-    setImageError(true);
+    const youtubeThumb = getThumbnailUrl(movie.url);
+    if (youtubeThumb && currentThumbnail !== youtubeThumb) {
+      setCurrentThumbnail(youtubeThumb);
+    } else {
+      setImageError(true);
+    }
   };
 
   const getImageSource = () => {
-    if (imageError || !movie.thumbnail) {
+    if (imageError) {
       return getFallbackImage(movie.category);
     }
-    return movie.thumbnail;
+    return currentThumbnail || movie.thumbnail;
+  };
+
+  const getVideoUrl = () => {
+    const videoId = getYouTubeVideoId(movie.url);
+    if (!videoId) return movie.url;
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
   };
 
   const handleImageClick = () => {
@@ -197,7 +233,7 @@ export const MovieCard = ({ movie, categoryColor, onEdit, onDelete }) => {
           <VideoContainer onClick={e => e.stopPropagation()}>
             <CloseButton onClick={handleCloseVideo}>✕</CloseButton>
             <iframe
-              src={`${movie.url}?autoplay=1`}
+              src={getVideoUrl()}
               title={movie.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

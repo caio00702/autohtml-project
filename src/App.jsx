@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { HomeDesktop } from './pages/HomeDesktop/HomeDesktop'
+import { HomeDesktop } from './HomeDesktop/HomeDesktop'
 import { MovieDetails } from './pages/MovieDetails/MovieDetails'
 import { GlobalStyle } from './styles/global'
 
