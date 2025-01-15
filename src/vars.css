@@ -1,0 +1,24 @@
+/* Figma Styles of your File */
+:root {
+  /* Colors */
+  --color-black-dark: #000000;
+  --color-gray-light: #F5F5F5;
+  --color-frontend: #6BD1FF;
+  --color-backend: #00C86F;
+  --color-mobile: #FFBA05;
+  --color-blue: #2271D1;
+
+  /* Fonts */
+  --title-big-font-family: 'Roboto', sans-serif;
+  --title-big-font-size: 60px;
+  --title-big-font-weight: 400;
+
+  --title-medium-font-family: 'Roboto', sans-serif;
+  --title-medium-font-size: 46px;
+  --title-medium-font-weight: 400;
+
+  /* Effects */
+  --frontend-box-shadow: inset 0px 0px 17px 8px rgba(107, 209, 255, 1.00);
+  --backend-box-shadow: inset 0px 0px 17px 8px rgba(0, 200, 111, 1.00);
+  --inov-and-gestao-box-shadow: inset 0px 0px 17px 8px rgba(255, 186, 5, 1.00);
+}

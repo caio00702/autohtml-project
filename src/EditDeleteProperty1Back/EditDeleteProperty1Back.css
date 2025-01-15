@@ -1,0 +1,93 @@
+.edit-delete-property-1-back,
+.edit-delete-property-1-back * {
+  box-sizing: border-box;
+}
+.edit-delete-property-1-back {
+  height: 59px;
+  position: relative;
+}
+.edit-delete-property-1-back .rectangle-2 {
+  background: #03122f;
+  border-radius: 0px 0px 15px 15px;
+  border-style: solid;
+  border-color: var(--backend, #00c86f);
+  border-width: 0px 5px 5px 5px;
+  width: 99.77%;
+  height: 100%;
+  position: absolute;
+  right: 0.23%;
+  left: 0%;
+  bottom: 0%;
+  top: 0%;
+  box-shadow: inset 0px -4px 5px 3px rgba(107, 209, 255, 1);
+}
+.edit-delete-property-1-back .frame-4 {
+  display: flex;
+  flex-direction: row;
+  gap: 70px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 47.46%;
+  position: absolute;
+  right: 0%;
+  left: 0%;
+  bottom: 27.12%;
+  top: 25.42%;
+}
+.edit-delete-property-1-back .frame-1 {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.edit-delete-property-1-back .vector {
+  flex-shrink: 0;
+  width: 25.43px;
+  height: 28px;
+  position: relative;
+  overflow: visible;
+}
+.edit-delete-property-1-back .deletar {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Roboto-ExtraBold", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.edit-delete-property-1-back .frame-5 {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.edit-delete-property-1-back .vector2 {
+  flex-shrink: 0;
+  width: 25.47px;
+  height: 28px;
+  position: relative;
+  overflow: visible;
+}
+.edit-delete-property-1-back .editar {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Roboto-ExtraBold", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
