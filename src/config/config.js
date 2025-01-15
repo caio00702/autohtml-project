@@ -3,7 +3,7 @@ const config = {
     apiUrl: "http://localhost:3001",
   },
   production: {
-    apiUrl: "https://aluraflix-api.onrender.com", // Você precisará substituir por sua URL real após fazer o deploy da API
+    apiUrl: "https://aluraflix-api-lq35.onrender.com",
   },
 };
 
