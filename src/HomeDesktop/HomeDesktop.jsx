@@ -9,12 +9,30 @@ import { NewVideoModal } from '../components/NewVideoModal/NewVideoModal';
 const Container = styled.div`
   background: var(--color-black-dark);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Content = styled.div`
+  flex: 1;
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 40px 60px;
+  width: 100%;
+`;
+
+const CategoriesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-top: 48px;
+`;
+
+const EmptyMessage = styled.p`
+  color: var(--color-gray-light);
+  text-align: center;
+  font-size: 18px;
+  margin-top: 48px;
 `;
 
 export const HomeDesktop = () => {
@@ -22,8 +40,6 @@ export const HomeDesktop = () => {
   const { movies, addMovie, updateMovie, deleteMovie } = useMovies();
 
   const featuredVideo = movies.find(video => video.id === "1");
-
-  // Filtra o vídeo em destaque dos outros vídeos
   const otherMovies = movies.filter(video => video.id !== "1");
 
   const moviesByCategory = otherMovies.reduce((acc, movie) => {
@@ -31,7 +47,6 @@ export const HomeDesktop = () => {
     if (!acc[category]) {
       acc[category] = [];
     }
-    // Verifica se o vídeo já existe na categoria antes de adicionar
     if (!acc[category].some(m => m.id === movie.id)) {
       acc[category].push(movie);
     }
@@ -59,18 +74,20 @@ export const HomeDesktop = () => {
       )}
       <Content>
         {movies.length === 0 ? (
-          <p style={{ color: '#fff' }}>Nenhum vídeo encontrado. Adicione um novo vídeo!</p>
+          <EmptyMessage>Nenhum vídeo encontrado. Adicione um novo vídeo!</EmptyMessage>
         ) : (
-          Object.entries(moviesByCategory).map(([category, categoryMovies]) => (
-            <Category
-              key={category}
-              title={category.toUpperCase()}
-              color={getCategoryColor(category)}
-              videos={categoryMovies}
-              onUpdateVideo={updateMovie}
-              onDeleteVideo={deleteMovie}
-            />
-          ))
+          <CategoriesContainer>
+            {Object.entries(moviesByCategory).map(([category, categoryMovies]) => (
+              <Category
+                key={category}
+                title={category.toUpperCase()}
+                color={getCategoryColor(category)}
+                videos={categoryMovies}
+                onUpdateVideo={updateMovie}
+                onDeleteVideo={deleteMovie}
+              />
+            ))}
+          </CategoriesContainer>
         )}
       </Content>
 

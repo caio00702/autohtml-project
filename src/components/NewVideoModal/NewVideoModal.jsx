@@ -152,12 +152,23 @@ const Button = styled.button`
 `;
 
 const getYouTubeVideoId = (url) => {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
   const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : null;
+  return (match && match[7].length === 11) ? match[7] : null;
 };
 
 const getEmbedUrl = (videoId) => `https://www.youtube.com/embed/${videoId}`;
+const getThumbnailUrl = (videoId) => `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
+// Função auxiliar para verificar se a thumbnail existe
+const checkThumbnailExists = async (url) => {
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    return response.ok;
+  } catch {
+    return false;
+  }
+};
 
 export const NewVideoModal = ({ isOpen, onClose, onVideoAdded }) => {
   const [formData, setFormData] = useState({
@@ -168,29 +179,37 @@ export const NewVideoModal = ({ isOpen, onClose, onVideoAdded }) => {
     description: ''
   });
   const [previewUrl, setPreviewUrl] = useState('');
+  const [thumbnailUrl, setThumbnailUrl] = useState('');
 
   if (!isOpen) return null;
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
 
-    // Atualizar preview quando a URL do vídeo mudar
     if (name === 'video') {
       const videoId = getYouTubeVideoId(value);
       if (videoId) {
-        setPreviewUrl(getEmbedUrl(videoId));
-        // Atualizar automaticamente a thumbnail
-        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+        const embedUrl = getEmbedUrl(videoId);
+        const maxResThumb = getThumbnailUrl(videoId);
+        const hqThumb = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        
+        // Tenta usar a thumbnail de alta resolução primeiro
+        const maxResExists = await checkThumbnailExists(maxResThumb);
+        const newThumbnailUrl = maxResExists ? maxResThumb : hqThumb;
+
+        setPreviewUrl(embedUrl);
+        setThumbnailUrl(newThumbnailUrl);
         setFormData(prev => ({
           ...prev,
-          thumbnail: thumbnailUrl
+          thumbnail: newThumbnailUrl
         }));
       } else {
         setPreviewUrl('');
+        setThumbnailUrl('');
       }
     }
   };
@@ -206,9 +225,9 @@ export const NewVideoModal = ({ isOpen, onClose, onVideoAdded }) => {
 
     const videoData = {
       title: formData.titulo,
-      url: formData.video,
-      thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-      category: formData.category.toLowerCase(),
+      url: getEmbedUrl(videoId),
+      thumbnail: getThumbnailUrl(videoId),
+      category: formData.category,
       description: formData.description
     };
 
@@ -220,6 +239,8 @@ export const NewVideoModal = ({ isOpen, onClose, onVideoAdded }) => {
       category: '',
       description: ''
     });
+    setPreviewUrl('');
+    setThumbnailUrl('');
     onClose();
   };
 

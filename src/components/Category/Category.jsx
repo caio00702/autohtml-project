@@ -3,27 +3,45 @@ import { MovieCard } from '../Cards/MovieCard';
 import PropTypes from 'prop-types';
 
 const Container = styled.section`
-  margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 `;
 
-const Title = styled.div`
-  background-color: ${props => props.color};
+const Title = styled.h2`
   color: var(--color-gray-light);
-  padding: 20px 40px;
   font-size: 35px;
-  font-weight: bold;
+  font-weight: 400;
+  padding: 20px 40px;
+  background-color: ${props => props.color};
   border-radius: 4px;
   display: inline-block;
-  margin-bottom: 30px;
   text-transform: uppercase;
-  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
 `;
 
 const CardsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-  padding: 0 20px;
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  padding: 8px 4px;
+  
+  /* Estilização da barra de rolagem horizontal */
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-frontend);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-blue);
+  }
 `;
 
 export const Category = ({ title, color, videos, onUpdateVideo, onDeleteVideo }) => {
@@ -31,10 +49,10 @@ export const Category = ({ title, color, videos, onUpdateVideo, onDeleteVideo })
     <Container>
       <Title color={color}>{title}</Title>
       <CardsContainer>
-        {videos.map(video => (
-          <MovieCard 
-            key={video.id} 
-            movie={video} 
+        {videos && videos.map(video => (
+          <MovieCard
+            key={video.id}
+            movie={video}
             categoryColor={color}
             onEdit={onUpdateVideo}
             onDelete={onDeleteVideo}
@@ -49,6 +67,6 @@ Category.propTypes = {
   title: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   videos: PropTypes.array.isRequired,
-  onUpdateVideo: PropTypes.func,
-  onDeleteVideo: PropTypes.func
+  onUpdateVideo: PropTypes.func.isRequired,
+  onDeleteVideo: PropTypes.func.isRequired
 };

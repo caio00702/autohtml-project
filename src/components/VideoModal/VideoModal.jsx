@@ -119,6 +119,15 @@ const Button = styled.button`
   `}
 `;
 
+const getYouTubeVideoId = (url) => {
+  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[7].length === 11) ? match[7] : null;
+};
+
+const getEmbedUrl = (videoId) => `https://www.youtube.com/embed/${videoId}`;
+const getThumbnailUrl = (videoId) => `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
 export const VideoModal = ({ isOpen, onClose, onSave, initialData }) => {
   const [formData, setFormData] = useState({
     title: '',
@@ -136,18 +145,44 @@ export const VideoModal = ({ isOpen, onClose, onSave, initialData }) => {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(formData);
-    onClose();
-  };
-
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+
+    if (name === 'url') {
+      const videoId = getYouTubeVideoId(value);
+      if (videoId) {
+        const embedUrl = getEmbedUrl(videoId);
+        const thumbnailUrl = getThumbnailUrl(videoId);
+        setFormData(prev => ({
+          ...prev,
+          url: embedUrl,
+          thumbnail: thumbnailUrl
+        }));
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const videoId = getYouTubeVideoId(formData.url);
+    if (!videoId) {
+      alert('URL do YouTube inválida');
+      return;
+    }
+
+    const videoData = {
+      ...formData,
+      url: getEmbedUrl(videoId),
+      thumbnail: getThumbnailUrl(videoId)
+    };
+
+    await onSave(videoData);
+    onClose();
   };
 
   return (
