@@ -5,12 +5,14 @@ import { HashRouter } from 'react-router-dom'
 import { MoviesProvider } from './contexts/MoviesContext'
 import { ThemeProvider } from 'styled-components'
 import { theme } from './styles/theme'
+import { GlobalStyle } from './styles/global'
 import './vars.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <HashRouter basename="/">
+    <HashRouter>
       <ThemeProvider theme={theme}>
+        <GlobalStyle />
         <MoviesProvider>
           <App />
         </MoviesProvider>

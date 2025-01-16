@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import { useMovies } from '../contexts/MoviesContext';
 import { NewVideoModal } from '../components/NewVideoModal/NewVideoModal';
 
+console.log("HomeDesktop sendo renderizado");
+
 const Container = styled.div`
   background: var(--color-black-dark);
   min-height: 100vh;
