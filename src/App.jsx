@@ -3,7 +3,7 @@ import { HomeDesktop } from './HomeDesktop/HomeDesktop'
 import { MovieDetails } from './pages/MovieDetails/MovieDetails'
 import { GlobalStyle } from './styles/global'
 
-function App() {
+export default function App() {
   return (
     <>
       <GlobalStyle />
